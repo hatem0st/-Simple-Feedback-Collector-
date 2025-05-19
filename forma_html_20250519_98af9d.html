@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Collector</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Feedback Collector</h1>
+        <form id="feedbackForm" action="submit.php" method="POST">
+            <div class="form-group">
+                <label for="name">Name (optional):</label>
+                <input type="text" id="name" name="name">
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email (optional):</label>
+                <input type="email" id="email" name="email">
+            </div>
+            
+            <div class="form-group">
+                <label for="message">Message (required):</label>
+                <textarea id="message" name="message" required></textarea>
+            </div>
+            
+            <button type="submit">Submit Feedback</button>
+        </form>
+
+        <div id="feedbackDisplay">
+            <h2>Previous Feedback</h2>
+            <?php
+            if (file_exists('feedback.txt')) {
+                echo '<div class="feedback-list">';
+                $entries = file('feedback.txt');
+                foreach (array_reverse($entries) as $entry) {
+                    echo '<div class="feedback-entry">' . htmlspecialchars($entry) . '</div>';
+                }
+                echo '</div>';
+            } else {
+                echo '<p>No feedback yet.</p>';
+            }
+            ?>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
